@@ -14,12 +14,40 @@ const stateCopy = {
 
 export function WhatsAppSettings() {
   const [status, setStatus] = useState<WhatsAppConnectionStatus>();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     whatsAppOnboardingService.getConnectionStatus().then(setStatus);
   }, []);
 
   const connected = Boolean(status?.phoneNumber);
+
+  async function handleConnect() {
+    setBusy(true);
+    setError(undefined);
+    try {
+      const next = await whatsAppOnboardingService.startSignup();
+      setStatus(next);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not connect WhatsApp. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleDisconnect() {
+    setBusy(true);
+    setError(undefined);
+    try {
+      await whatsAppOnboardingService.disconnect();
+      setStatus(await whatsAppOnboardingService.getConnectionStatus());
+    } catch {
+      setError("Could not disconnect right now. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   return (
     <>
@@ -28,7 +56,11 @@ export function WhatsAppSettings() {
       <Card className="max-w-xl">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-lg font-semibold text-white">Connection status</h2>
-          {status ? <Badge tone={stateCopy[status.state].tone}>{stateCopy[status.state].label}</Badge> : null}
+          {status ? (
+            <Badge tone={connected ? "accent" : stateCopy[status.state].tone}>
+              {connected ? "Connected" : stateCopy[status.state].label}
+            </Badge>
+          ) : null}
         </div>
         {connected ? (
           <dl className="mt-4 space-y-2 text-sm">
@@ -46,14 +78,21 @@ export function WhatsAppSettings() {
             No WhatsApp Business account connected yet.
           </p>
         )}
+        {error ? <p className="mt-4 text-sm text-red-400">{error}</p> : null}
         <div className="mt-6 flex gap-3">
           {connected ? (
             <>
-              <Button variant="secondary">Reconnect</Button>
-              <Button variant="ghost">Disconnect</Button>
+              <Button variant="secondary" onClick={handleConnect} disabled={busy}>
+                {busy ? "Reconnecting…" : "Reconnect"}
+              </Button>
+              <Button variant="ghost" onClick={handleDisconnect} disabled={busy}>
+                {busy ? "Disconnecting…" : "Disconnect"}
+              </Button>
             </>
           ) : (
-            <Button disabled={status?.state !== "available"}>Connect WhatsApp</Button>
+            <Button onClick={handleConnect} disabled={busy || status?.state !== "available"}>
+              {busy ? "Connecting…" : "Connect WhatsApp"}
+            </Button>
           )}
         </div>
       </Card>
