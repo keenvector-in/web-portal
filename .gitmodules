@@ -1,0 +1,3 @@
+[submodule "packages/kvcl"]
+	path = packages/kvcl
+	url = https://github.com/keenvector-in/kvcl.git
