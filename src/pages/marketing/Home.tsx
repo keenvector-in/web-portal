@@ -1,6 +1,4 @@
-import { Badge, Button, Card } from "@keenvector/kvcl";
-import { BarChart3, Megaphone, PlayCircle, PlugZap, Rocket } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Badge, BarChart3, Button, Card, Link, Megaphone, PlayCircle, PlugZap, Rocket } from "@keenvector/kvcl";
 import { ChannelHub } from "../../components/ChannelHub";
 import { Seo } from "../../components/Seo";
 import { pricingPlans } from "../../config/pricing";

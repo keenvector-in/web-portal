@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "@keenvector/kvcl";
 import { AnalyticsPage } from "./features/analytics/AnalyticsPage";
 import { ContactsPage } from "./features/contacts/ContactsPage";
 import { InboxPage } from "./features/inbox/InboxPage";

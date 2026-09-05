@@ -1,7 +1,5 @@
-import { Button, Card, Input } from "@keenvector/kvcl";
-import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Seo } from "../../components/Seo";
+import { Button, Card, Input, Link, useNavigate } from "@keenvector/kvcl";
+import { useState, type FormEvent } from "react";import { Seo } from "../../components/Seo";
 import { register } from "../../services/api/auth";
 
 interface FormState {

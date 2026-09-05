@@ -1,6 +1,5 @@
-import { Button, Card, Input } from "@keenvector/kvcl";
+import { Button, Card, Input, Link } from "@keenvector/kvcl";
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
 import { Seo } from "../../components/Seo";
 
 export function ForgotPassword() {

@@ -1,5 +1,4 @@
-import { Button } from "@keenvector/kvcl";
-import { Link } from "react-router-dom";
+import { Button, Link } from "@keenvector/kvcl";
 import { Seo } from "../components/Seo";
 
 export function NotFound() {

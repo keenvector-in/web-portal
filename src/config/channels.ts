@@ -1,4 +1,4 @@
-import { AtSign, Mail, MessageCircle, type LucideIcon } from "lucide-react";
+import { AtSign, Mail, MessageCircle, type LucideIcon } from "@keenvector/kvcl";
 
 export type Channel = "whatsapp" | "email" | "instagram";
 

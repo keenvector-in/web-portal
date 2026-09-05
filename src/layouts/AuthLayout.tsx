@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "@keenvector/kvcl";
 import { Logo } from "../components/Logo";
 
 export function AuthLayout() {

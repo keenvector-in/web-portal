@@ -1,13 +1,15 @@
-import { Button, Container } from "@keenvector/kvcl";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Button, Container, Link, Menu, NavLink, Outlet, X } from "@keenvector/kvcl";
+import { useState } from "react";
 import { Logo } from "../components/Logo";
 import { footerLinks, marketingNav, site } from "../config/site";
 
 function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-40 border-b border-white/5 bg-ink-950/80 backdrop-blur-md">
       <Container className="flex h-16 items-center justify-between">
-        <Link to="/" className="shrink-0">
+        <Link to="/" className="shrink-0" onClick={() => setOpen(false)}>
           <Logo />
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
@@ -25,7 +27,7 @@ function Navbar() {
             </NavLink>
           ))}
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="hidden items-center gap-3 md:flex">
           <Button as={Link} to="/login" variant="ghost" size="md">
             Log in
           </Button>
@@ -33,7 +35,45 @@ function Navbar() {
             Get started
           </Button>
         </div>
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-10 w-10 items-center justify-center rounded-md text-ink-200 hover:bg-white/5 md:hidden"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </Container>
+
+      {open ? (
+        <div className="border-t border-white/5 bg-ink-950 md:hidden">
+          <Container className="flex flex-col gap-1 py-4">
+            {marketingNav.map((item) => (
+              <NavLink
+                key={item.href}
+                to={item.href}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isActive ? "bg-white/5 text-white" : "text-ink-300 hover:bg-white/5 hover:text-white"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <div className="mt-3 flex flex-col gap-2 px-3">
+              <Button as={Link} to="/login" variant="ghost" size="md" onClick={() => setOpen(false)}>
+                Log in
+              </Button>
+              <Button as={Link} to="/register" variant="primary" size="md" onClick={() => setOpen(false)}>
+                Get started
+              </Button>
+            </div>
+          </Container>
+        </div>
+      ) : null}
     </header>
   );
 }

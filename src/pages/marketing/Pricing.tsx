@@ -1,7 +1,5 @@
-import { Button, Card, Container } from "@keenvector/kvcl";
-import { Check, Minus, ShieldCheck } from "lucide-react";
+import { Button, Card, Check, Container, Link, Minus, ShieldCheck } from "@keenvector/kvcl";
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
 import { Seo } from "../../components/Seo";
 import { ANNUAL_DISCOUNT, comparisonGroups, contactTiers, pricingPlans, type ContactTier, type PricingPlan } from "../../config/pricing";
 import { faqs } from "../../data/marketingContent";

@@ -1,4 +1,4 @@
-import { AtSign, Mail, MessageCircle } from "lucide-react";
+import { AtSign, Mail, MessageCircle } from "@keenvector/kvcl";
 
 // Hub-and-spoke diagram: WhatsApp, Instagram and Email as channel nodes, each linked
 // to a central KeenVector node — literal illustration of "connect once, message

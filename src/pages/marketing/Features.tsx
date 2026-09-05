@@ -1,6 +1,4 @@
-import { Card } from "@keenvector/kvcl";
-import { BarChart3, Check, Gauge, Layers, Megaphone, PlugZap, ShieldCheck, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { BarChart3, Card, Check, Gauge, Layers, Link, Megaphone, PlugZap, ShieldCheck, Users } from "@keenvector/kvcl";
 import { Seo } from "../../components/Seo";
 import { CHANNEL_META, marketingChannels } from "../../config/channels";
 

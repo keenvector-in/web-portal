@@ -1,7 +1,5 @@
-import { Badge, Button, Card, Container, Input } from "@keenvector/kvcl";
-import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { Seo } from "../components/Seo";
+import { Badge, Button, Card, Container, Input, useNavigate } from "@keenvector/kvcl";
+import { useEffect, useState, type FormEvent } from "react";import { Seo } from "../components/Seo";
 import { whatsAppOnboardingService, type WhatsAppConnectionState } from "../services/whatsapp/WhatsAppOnboardingService";
 
 interface BusinessProfile {
