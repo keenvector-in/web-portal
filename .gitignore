@@ -27,3 +27,4 @@ graphify-out/
 *.sw?
 .vercel
 .env*
+*-command-message*.txt
