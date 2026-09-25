@@ -1,8 +1,9 @@
 import { Button, Card, Container, Input } from "@keenvector/kvcl";
 import { useState, type FormEvent } from "react";
 import { Seo } from "../../components/Seo";
-import { submitContact } from "../../services/api/contact";
+import { submitContact, type ContactResult } from "../../services/api/contact";
 import { directContacts, site } from "../../config/site";
+import { env } from "../../config/env";
 
 interface FormState {
   name: string;
@@ -27,6 +28,8 @@ export function Contact() {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
+  const [result, setResult] = useState<ContactResult>({});
+  const [failure, setFailure] = useState("");
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -40,10 +43,13 @@ export function Contact() {
 
     setStatus("submitting");
     try {
-      await submitContact(form);
+      setResult(await submitContact(form));
       setStatus("sent");
       setForm(emptyForm);
-    } catch {
+    } catch (error) {
+      // A missing VITE_CHAT_API_BASE_URL and a dead network look identical to the
+      // visitor. Keep the friendly line for them, show the cause while developing.
+      setFailure(error instanceof Error ? error.message : String(error));
       setStatus("error");
     }
   }
@@ -55,6 +61,12 @@ export function Contact() {
         <p className="mt-4 text-ink-300">
           Thanks for reaching out — we'll get back to you at the email you provided.
         </p>
+        {result.verify_code ? (
+          <p className="mt-6 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-ink-300">
+            Already talking to us on WhatsApp? Send the code <strong className="font-mono text-base text-white">{result.verify_code}</strong> from{" "}
+            {result.claim_address} and we'll link this message to that chat.
+          </p>
+        ) : null}
       </Container>
     );
   }
@@ -114,9 +126,14 @@ export function Contact() {
               {errors.message ? <p className="text-xs text-red-400">{errors.message}</p> : null}
             </div>
             {status === "error" ? (
-              <p className="text-sm text-red-400">
-                Something went wrong sending your message. Please try again in a moment.
-              </p>
+              <div className="space-y-1">
+                <p className="text-sm text-red-400">
+                  Something went wrong sending your message. Please try again in a moment.
+                </p>
+                {env.isDev && failure ? (
+                  <p className="font-mono text-xs text-red-300/80">{failure}</p>
+                ) : null}
+              </div>
             ) : null}
             <Button type="submit" className="w-full" disabled={status === "submitting"}>
               {status === "submitting" ? "Sending…" : "Send message"}

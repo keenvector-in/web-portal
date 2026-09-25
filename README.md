@@ -17,8 +17,14 @@ cp .env.example .env
 npm run dev
 ```
 
-`VITE_API_BASE_URL` empty means no backend — the contact form and registration flow fall
-back to a graceful mock success so the UI can be exercised end to end without a backend.
+`VITE_API_BASE_URL` empty means no backend — the registration flow falls back to a
+graceful mock success so the UI can be exercised end to end without a backend.
+
+`VITE_CHAT_API_BASE_URL` is **required for the contact form**, which has no such fallback:
+it posts to `tenant-site`'s public `/public/sites/{slug}/leads`, and an unset value fails
+every submit. Set it in every environment that builds this site — `.env` is gitignored, so
+a Vercel or container build does not inherit yours. Vite reads `.env` only at startup:
+after editing it, restart the dev server.
 
 ## Build
 
