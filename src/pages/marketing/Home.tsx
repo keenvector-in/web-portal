@@ -1,4 +1,4 @@
-import { Badge, BarChart3, Button, Card, Link, Megaphone, PlayCircle, PlugZap, Rocket } from "@keenvector/kvcl";
+import { Badge, BarChart3, Button, Card, Link, Megaphone, MessageCircle, PlugZap, Rocket } from "@keenvector/kvcl";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef, type MouseEvent } from "react";
 import { ChannelHub } from "../../components/ChannelHub";
@@ -6,7 +6,7 @@ import { WorkflowBackdrop } from "../../components/WorkflowBackdrop";
 import { Reveal } from "../../components/motion";
 import { Seo } from "../../components/Seo";
 import { pricingPlans } from "../../config/pricing";
-import { site } from "../../config/site";
+import { site, whatsappUrl } from "../../config/site";
 
 const features = [
   {
@@ -125,8 +125,8 @@ function Hero() {
                 <span className="sheen" aria-hidden />
                 <Rocket className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-12" /> Start free trial
               </Button>
-              <Button as={Link} to="/contact" variant="secondary" size="lg">
-                <PlayCircle className="h-4 w-4" /> Book a demo
+              <Button as="a" href={whatsappUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="lg">
+                <MessageCircle className="h-4 w-4 text-accent-400" /> Connect on WhatsApp
               </Button>
             </motion.div>
           </div>
