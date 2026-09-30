@@ -20,8 +20,9 @@ export class ApiRequestError extends Error implements ApiError {
 export async function apiPost<TResponse, TBody extends object>(
   path: string,
   body: TBody,
+  baseUrl: string = env.apiBaseUrl,
 ): Promise<TResponse> {
-  if (!env.apiBaseUrl) {
+  if (!baseUrl) {
     throw new ApiRequestError({
       status: 0,
       code: "no_backend_configured",
@@ -29,7 +30,7 @@ export async function apiPost<TResponse, TBody extends object>(
     });
   }
 
-  const response = await fetch(`${env.apiBaseUrl}${path}`, {
+  const response = await fetch(`${baseUrl}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -39,7 +40,7 @@ export async function apiPost<TResponse, TBody extends object>(
     const payload = await response.json().catch(() => null);
     throw new ApiRequestError({
       status: response.status,
-      code: payload?.code ?? "request_failed",
+      code: payload?.error_code ?? payload?.code ?? "request_failed",
       message: payload?.message ?? "The request could not be completed. Please try again.",
     });
   }

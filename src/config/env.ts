@@ -1,5 +1,10 @@
 export const env = {
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? "",
+  // edge-gateway — the one public entry for login/signup (/api/auth/*).
+  edgeGatewayBaseUrl: import.meta.env.VITE_EDGE_GATEWAY_BASE_URL ?? "",
+  // business-admin-portal — where signed-in tenants work; the legacy product
+  // routes here (/dashboard, /inbox, /settings/*...) redirect to it.
+  businessAdminBaseUrl: import.meta.env.VITE_BUSINESS_ADMIN_BASE_URL ?? "",
   appEnv: import.meta.env.VITE_APP_ENV ?? "development",
   enableWhatsApp: import.meta.env.VITE_ENABLE_WHATSAPP === "true",
   enableAnalytics: import.meta.env.VITE_ENABLE_ANALYTICS === "true",

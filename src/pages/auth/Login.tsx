@@ -1,9 +1,9 @@
-import { Button, Card, Input, Link, useNavigate } from "@keenvector/kvcl";
-import { useState, type FormEvent } from "react";import { Seo } from "../../components/Seo";
-import { login } from "../../services/api/auth";
+import { Button, Card, Input, Link } from "@keenvector/kvcl";
+import { useState, type FormEvent } from "react";
+import { Seo } from "../../components/Seo";
+import { continueToBusinessAdmin, login } from "../../services/api/auth";
 
 export function Login() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>();
@@ -14,11 +14,11 @@ export function Login() {
     setError(undefined);
     setSubmitting(true);
     try {
-      await login({ email, password });
-      navigate("/dashboard");
+      const session = await login({ email, password });
+      // Stays "submitting" while the browser moves to business-admin.
+      await continueToBusinessAdmin(session);
     } catch {
       setError("We couldn't sign you in with those details. Please try again.");
-    } finally {
       setSubmitting(false);
     }
   }

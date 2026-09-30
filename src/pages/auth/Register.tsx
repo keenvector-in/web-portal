@@ -1,38 +1,34 @@
-import { Button, Card, Input, Link, useNavigate } from "@keenvector/kvcl";
+import { Button, Card, Input, Link } from "@keenvector/kvcl";
 import { useState, type FormEvent } from "react";import { Seo } from "../../components/Seo";
-import { register } from "../../services/api/auth";
+import { continueToBusinessAdmin, signup } from "../../services/api/auth";
+import { ApiRequestError } from "../../services/api/client";
 
 interface FormState {
-  name: string;
   businessName: string;
   email: string;
-  phone: string;
   password: string;
   confirmPassword: string;
 }
 
 const emptyForm: FormState = {
-  name: "",
   businessName: "",
   email: "",
-  phone: "",
   password: "",
   confirmPassword: "",
 };
 
 function validate(form: FormState): Partial<Record<keyof FormState, string>> {
   const errors: Partial<Record<keyof FormState, string>> = {};
-  if (!form.name.trim()) errors.name = "Enter your name.";
-  if (!form.businessName.trim()) errors.businessName = "Enter your business name.";
+  const businessName = form.businessName.trim();
+  if (businessName.length < 2 || businessName.length > 80)
+    errors.businessName = "Business name must be 2 to 80 characters.";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Enter a valid email address.";
-  if (!form.phone.trim()) errors.phone = "Enter a phone number.";
   if (form.password.length < 8) errors.password = "Password must be at least 8 characters.";
   if (form.confirmPassword !== form.password) errors.confirmPassword = "Passwords don't match.";
   return errors;
 }
 
 export function Register() {
-  const navigate = useNavigate();
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [formError, setFormError] = useState<string>();
@@ -51,11 +47,18 @@ export function Register() {
     setSubmitting(true);
     setFormError(undefined);
     try {
-      await register(form);
-      navigate("/onboarding");
-    } catch {
-      setFormError("We couldn't create your account. Please try again.");
-    } finally {
+      const session = await signup({
+        business_name: form.businessName.trim(),
+        email: form.email,
+        password: form.password,
+      });
+      await continueToBusinessAdmin("access_token" in session ? session : undefined);
+    } catch (error) {
+      setFormError(
+        error instanceof ApiRequestError && error.status > 0
+          ? error.message
+          : "We couldn't create your account. Please try again.",
+      );
       setSubmitting(false);
     }
   }
@@ -66,13 +69,6 @@ export function Register() {
       <Card>
         <h1 className="font-display text-2xl font-bold text-white">Create your account</h1>
         <form className="mt-6 space-y-5" onSubmit={handleSubmit} noValidate>
-          <Input
-            label="Name"
-            value={form.name}
-            onChange={(event) => update("name", event.target.value)}
-            error={errors.name}
-            autoComplete="name"
-          />
           <Input
             label="Business name"
             value={form.businessName}
@@ -87,14 +83,6 @@ export function Register() {
             onChange={(event) => update("email", event.target.value)}
             error={errors.email}
             autoComplete="email"
-          />
-          <Input
-            label="Phone"
-            type="tel"
-            value={form.phone}
-            onChange={(event) => update("phone", event.target.value)}
-            error={errors.phone}
-            autoComplete="tel"
           />
           <Input
             label="Password"
