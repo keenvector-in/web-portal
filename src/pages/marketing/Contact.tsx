@@ -2,7 +2,7 @@ import { Button, Card, Container, Input } from "@keenvector/kvcl";
 import { useState, type FormEvent } from "react";
 import { Seo } from "../../components/Seo";
 import { submitContact, type ContactResult } from "../../services/api/contact";
-import { directContacts, site } from "../../config/site";
+import { directContacts, site, whatsappUrl } from "../../config/site";
 import { env } from "../../config/env";
 
 interface FormState {
@@ -150,6 +150,12 @@ export function Contact() {
               </a>
             </p>
           ))}
+          <p>
+            WhatsApp:{" "}
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-brand-300 hover:underline">
+              {site.whatsappDisplay}
+            </a>
+          </p>
         </div>
       </Container>
     </>

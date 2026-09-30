@@ -1,10 +1,10 @@
-import { Button, Container, Link, Menu, NavLink, Outlet, X, useLocation } from "@keenvector/kvcl";
+import { Button, Container, Link, Menu, MessageCircle, NavLink, Outlet, X, useLocation } from "@keenvector/kvcl";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useEffect, useState } from "react";
 import { env } from "../config/env";
 import { ScrollProgress } from "../components/motion";
 import { Logo } from "../components/Logo";
-import { footerLinks, marketingNav, site } from "../config/site";
+import { footerLinks, marketingNav, site, whatsappUrl } from "../config/site";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -118,6 +118,9 @@ function Footer() {
           <a href={`mailto:${site.supportEmail}`} className="mt-3 inline-block text-sm text-ink-400 hover:text-white">
             {site.supportEmail}
           </a>
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="mt-1.5 flex items-center gap-1.5 text-sm text-ink-400 hover:text-white">
+            <MessageCircle className="h-4 w-4 text-accent-400" aria-hidden /> WhatsApp {site.whatsappDisplay}
+          </a>
         </div>
         <FooterColumn title="Product" links={footerLinks.product} />
         <FooterColumn title="Company" links={footerLinks.company} />
@@ -188,6 +191,16 @@ export function MarketingLayout() {
         <Outlet />
       </motion.main>
       <Footer />
+      {/* Bottom-left: the chat widget's bubble owns bottom-right. */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Chat with us on WhatsApp, ${site.whatsappDisplay}`}
+        className="fixed bottom-5 left-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent-500 text-white shadow-card transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950"
+      >
+        <MessageCircle className="h-6 w-6" aria-hidden />
+      </a>
     </div>
   );
 }

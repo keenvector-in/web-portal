@@ -82,7 +82,8 @@ function Hero() {
       </motion.div>
 
       <div className="mx-auto max-w-6xl px-6 pb-16 pt-16 sm:pb-24 sm:pt-24">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        {/* grid-cols-1: an implicit column grows to the ~610px diagram and pushes the headline off a phone screen. */}
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }}>
               <Badge tone="neutral">
@@ -139,7 +140,8 @@ function Hero() {
             style={{ perspective: 900 }}
           >
             <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="float">
-              <ChannelHub className="mx-auto w-fit" />
+              {/* The diagram is fixed-width; zoom (unlike scale) also shrinks its layout box. */}
+              <ChannelHub className="mx-auto w-fit max-sm:[zoom:0.52]" />
             </motion.div>
           </motion.div>
         </div>

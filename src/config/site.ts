@@ -4,7 +4,12 @@ export const site = {
   description:
     "KeenVector helps businesses manage customer conversations, WhatsApp communication, automation, and engagement from one platform.",
   supportEmail: "support@keenvector.in",
+  // WhatsApp in international format without "+", as wa.me wants it.
+  whatsappNumber: "917285082801",
+  whatsappDisplay: "+91 72850 82801",
 } as const;
+
+export const whatsappUrl = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent("Hi KeenVector, I'd like to know more.")}`;
 
 export const directContacts = [
   { label: "Saurabh Rathod", email: "saurabh.rathod@keenvector.in" },
