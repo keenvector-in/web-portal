@@ -1,0 +1,37 @@
+# Tell vector-chart (the deploy repo) about every push to master. Its bump
+# workflow records this commit as dev's version of the portal and deploys it
+# to dev; staging and prod follow by promotion PRs there.
+# See vector-chart/docs/promotion.md.
+#
+# The admin portals and tenant-portal build against kvcl through
+# file:../../kvcl, so the kvcl commit current right now is sent along and
+# pinned with this one. web-portal pins kvcl itself (git submodule) and
+# vector-chart ignores kvcl_sha for it.
+name: release
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Dispatch build-done to vector-chart
+        env:
+          # Fine-grained token: Contents read on kvcl, Contents write on vector-chart.
+          GH_TOKEN: ${{ secrets.KV_CHART_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::KV_CHART_TOKEN is not set; vector-chart was not told about this push"
+            exit 0
+          fi
+          kvcl=$(gh api repos/keenvector-in/kvcl/commits/master --jq .sha)
+          gh api repos/keenvector-in/vector-chart/dispatches -f event_type=build-done \
+            -f "client_payload[name]=${{ github.event.repository.name }}" \
+            -f "client_payload[sha]=${{ github.sha }}" \
+            -f "client_payload[kvcl_sha]=$kvcl"
+          echo "vector-chart: ${{ github.event.repository.name }} dev -> ${GITHUB_SHA::12} (kvcl ${kvcl::12})"
