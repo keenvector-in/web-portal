@@ -1,35 +1,42 @@
 import { site } from "../../config/site";
-import { LegalPage, LegalSection } from "./LegalPage";
+import { ExternalLink, LegalPage, LegalSection, PageLink, SupportEmail } from "./LegalPage";
 
 export function AcceptableUse() {
   return (
     <LegalPage title="Acceptable Use Policy">
       <p>
-        This draft policy describes what is and isn't permitted when using {site.name} to
-        communicate with customers, pending legal review before publication.
+        This policy sets out what is and isn't allowed when using {site.name} to talk to
+        customers. It is part of our <PageLink href="/terms">terms of service</PageLink>.
       </p>
       <LegalSection heading="Not permitted">
         <p>
-          Sending unsolicited bulk messages to recipients who have not opted in, sending
-          content that violates WhatsApp Business Platform's own policies, or using the
-          platform to send spam, phishing, or fraudulent content.
+          Messaging people who have not opted in, spam, phishing, fraud, or misleading content;
+          content that breaks the{" "}
+          <ExternalLink href="https://business.whatsapp.com/policy">
+            WhatsApp Business messaging policy
+          </ExternalLink>{" "}
+          or{" "}
+          <ExternalLink href="https://transparency.meta.com/policies/community-standards/">
+            Meta's community standards
+          </ExternalLink>
+          ; selling goods or services those policies prohibit; and anything unlawful.
         </p>
       </LegalSection>
       <LegalSection heading="Consent and opt-out">
         <p>
-          You are responsible for obtaining consent before messaging a contact, and for
-          honoring opt-out requests promptly.
+          You are responsible for getting consent before messaging a contact, and for honouring
+          opt-out requests promptly.
         </p>
       </LegalSection>
       <LegalSection heading="Enforcement">
         <p>
-          Accounts found in violation of this policy may have channel connections suspended
-          pending review.
+          We may suspend channel connections or accounts that break this policy while we review
+          them, and close accounts for serious or repeated breaches.
         </p>
       </LegalSection>
       <LegalSection heading="Contact">
         <p>
-          Report a concern: <a href={`mailto:${site.supportEmail}`} className="text-brand-300 hover:underline">{site.supportEmail}</a>.
+          Report a concern: <SupportEmail />.
         </p>
       </LegalSection>
     </LegalPage>

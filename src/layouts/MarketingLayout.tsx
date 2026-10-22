@@ -127,7 +127,7 @@ function Footer() {
         <FooterColumn title="Legal" links={footerLinks.legal} />
       </Container>
       <Container className="border-t border-white/5 py-6 text-xs text-ink-500">
-        © {new Date().getFullYear()} {site.name}. All rights reserved.
+        © {new Date().getFullYear()} {site.legal.name} ({site.legal.udyam}), {site.legal.location}. All rights reserved.
       </Container>
     </footer>
   );
