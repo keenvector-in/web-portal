@@ -5,6 +5,8 @@ export const env = {
   // business-admin-portal — where signed-in tenants work; the legacy product
   // routes here (/dashboard, /inbox, /settings/*...) redirect to it.
   businessAdminBaseUrl: import.meta.env.VITE_BUSINESS_ADMIN_BASE_URL ?? "",
+  // Developer docs (the docs repo). /developers redirects here.
+  docsBaseUrl: import.meta.env.VITE_DOCS_BASE_URL || "https://docs.keenvector.in",
   appEnv: import.meta.env.VITE_APP_ENV ?? "development",
   enableWhatsApp: import.meta.env.VITE_ENABLE_WHATSAPP === "true",
   enableAnalytics: import.meta.env.VITE_ENABLE_ANALYTICS === "true",

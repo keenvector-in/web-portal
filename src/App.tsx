@@ -32,6 +32,15 @@ function ToBusinessAdmin() {
   return env.businessAdminBaseUrl ? null : <NotFound />;
 }
 
+// The docs live on their own site; /developers is the shareable entry to it,
+// so nav and footer keep using plain internal links.
+function ToDocs() {
+  useEffect(() => {
+    window.location.replace(env.docsBaseUrl);
+  }, []);
+  return null;
+}
+
 function App() {
   return (
     <>
@@ -47,6 +56,7 @@ function App() {
           <Route path="/acceptable-use" element={<AcceptableUse />} />
           <Route path="/data-deletion" element={<DataDeletion />} />
           <Route path="/whatsapp" element={<WhatsAppPolicy />} />
+          <Route path="/developers" element={<ToDocs />} />
         </Route>
 
         <Route element={<AuthLayout />}>

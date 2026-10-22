@@ -28,6 +28,7 @@ export const directContacts = [
 export const marketingNav = [
   { label: "Features", href: "/features" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Developers", href: "/developers" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -37,6 +38,7 @@ export const footerLinks = {
     { label: "Features", href: "/features" },
     { label: "Pricing", href: "/pricing" },
     { label: "WhatsApp integration", href: "/whatsapp" },
+    { label: "Developer docs", href: "/developers" },
   ],
   company: [
     { label: "About", href: "/about" },
