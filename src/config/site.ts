@@ -14,14 +14,13 @@ export const site = {
     udyam: "UDYAM-GJ-09-0082566",
     location: "Gandhinagar, Gujarat 382041, India",
     // Bump when any legal page changes.
-    lastUpdated: "22 October 2026",
+    lastUpdated: "5 November 2026",
   },
 } as const;
 
 export const whatsappUrl = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent("Hi KeenVector, I'd like to know more.")}`;
 
 export const directContacts = [
-  { label: "Saurabh Rathod", email: "saurabh.rathod@keenvector.in" },
   { label: "Hetal", email: "hetal@keenvector.in" },
 ] as const;
 
