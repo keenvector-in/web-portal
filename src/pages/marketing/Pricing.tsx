@@ -1,7 +1,17 @@
 import { Button, Card, Check, Container, Link, Minus, ShieldCheck } from "@keenvector/kvcl";
 import { Fragment, useState } from "react";
 import { Seo } from "../../components/Seo";
-import { ANNUAL_DISCOUNT, comparisonGroups, contactTiers, pricingPlans, type ContactTier, type PricingPlan } from "../../config/pricing";
+import {
+  ANNUAL_DISCOUNT,
+  comparisonGroups,
+  contactTiers,
+  pricingPlans,
+  usageRates,
+  WALLET_TOPUP_MAX,
+  WALLET_TOPUP_MIN,
+  type ContactTier,
+  type PricingPlan,
+} from "../../config/pricing";
 import { faqs } from "../../data/marketingContent";
 import { formatCurrency } from "../../utils/format";
 
@@ -129,6 +139,26 @@ export function Pricing() {
             <ShieldCheck className="h-4 w-4 text-accent-400" /> 14-day free trial
           </span>
           <span>No card required</span>
+        </div>
+
+        <div className="mt-20">
+          <h2 className="text-center font-display text-2xl font-bold tracking-tight text-white">Message rates</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-ink-400">
+            On top of your plan, each message sent is charged per channel from a prepaid wallet. Top up from{" "}
+            {formatCurrency(WALLET_TOPUP_MIN)} to {formatCurrency(WALLET_TOPUP_MAX)} at a time with UPI, cards or netbanking.
+          </p>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {usageRates.map((r) => (
+              <Card key={r.channel}>
+                <p className="text-sm font-semibold text-white">{r.channel}</p>
+                <p className="mt-2 font-display text-2xl font-bold text-white">
+                  ₹{r.perMessage.toFixed(2)}
+                  <span className="text-sm font-normal text-ink-400"> / message</span>
+                </p>
+                <p className="mt-2 text-xs text-ink-400">{r.note}</p>
+              </Card>
+            ))}
+          </div>
         </div>
 
         <div className="mt-20">

@@ -114,3 +114,26 @@ export const comparisonGroups: { group: string; rows: { label: string; values: (
     ],
   },
 ];
+
+/**
+ * Pay-as-you-go message rates, drawn from the workspace's prepaid wallet. Must match
+ * the `rates` rows in core-engine billing-service (paise per message: whatsapp 15,
+ * instagram 5, email 5, slack 2) — change both together.
+ */
+export interface UsageRate {
+  channel: string;
+  /** Rupees per message sent. */
+  perMessage: number;
+  note: string;
+}
+
+export const usageRates: UsageRate[] = [
+  { channel: "WhatsApp", perMessage: 0.15, note: "Platform fee. Meta's own WhatsApp charges are billed by Meta to your WhatsApp Business Account." },
+  { channel: "Instagram DMs", perMessage: 0.05, note: "Includes comment replies and private replies." },
+  { channel: "Email", perMessage: 0.05, note: "Per email sent from your connected domain." },
+  { channel: "Slack", perMessage: 0.02, note: "Alerts and forwards posted to your Slack workspace." },
+];
+
+/** Wallet top-up bounds, in rupees — billing-service rejects anything outside them. */
+export const WALLET_TOPUP_MIN = 500;
+export const WALLET_TOPUP_MAX = 100000;

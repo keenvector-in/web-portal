@@ -4,11 +4,15 @@
 export const faqs = [
   {
     q: "Can I switch plans later?",
-    a: "Yes, you can upgrade or downgrade at any time from Billing inside your workspace. Changes are prorated for the current cycle.",
+    a: "Yes, you can upgrade or downgrade at any time from Billing inside your workspace. Your current plan stays active until the new plan's first payment goes through, so sending never stops mid-change.",
   },
   {
     q: "Do you support WhatsApp Business API?",
     a: "Yes — WhatsApp, Email and Instagram DMs are all supported channels, connected once and usable across campaigns.",
+  },
+  {
+    q: "How are messages charged?",
+    a: "Each message you send is charged per channel from a prepaid wallet in your workspace — see the message rates above. Top up any time with UPI, cards or netbanking.",
   },
   {
     q: "Is there a free trial?",
