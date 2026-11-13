@@ -5,7 +5,7 @@ import { ChannelHub } from "../../components/ChannelHub";
 import { WorkflowBackdrop } from "../../components/WorkflowBackdrop";
 import { Reveal } from "../../components/motion";
 import { Seo } from "../../components/Seo";
-import { pricingPlans } from "../../config/pricing";
+import { pricingPlans, usageRates } from "../../config/pricing";
 import { site, whatsappUrl } from "../../config/site";
 
 const features = [
@@ -260,6 +260,17 @@ export function Home() {
               );
             })}
           </div>
+          <Reveal className="mt-8">
+            <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-2xl border border-white/10 bg-ink-900/60 px-5 py-4 text-sm">
+              <span className="text-ink-400">Plus per message, from a prepaid wallet:</span>
+              {usageRates.map((r) => (
+                <span key={r.channel} className="text-white">
+                  {r.channel} <span className="font-semibold">₹{r.perMessage.toFixed(2)}</span>
+                </span>
+              ))}
+            </div>
+            <p className="mt-2 text-center text-xs text-ink-500">WhatsApp also carries Meta&apos;s own charges, billed by Meta to your WhatsApp Business Account.</p>
+          </Reveal>
           <div className="mt-8 text-center">
             <Link to="/pricing" className="group text-sm font-medium text-brand-300">
               See full plan comparison <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
