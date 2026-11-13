@@ -6,7 +6,6 @@ import { AuthLayout } from "./layouts/AuthLayout";
 import { MarketingLayout } from "./layouts/MarketingLayout";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { Login } from "./pages/auth/Login";
-import { Register } from "./pages/auth/Register";
 import { AcceptableUse } from "./pages/legal/AcceptableUse";
 import { DataDeletion } from "./pages/legal/DataDeletion";
 import { Privacy } from "./pages/legal/Privacy";
@@ -30,6 +29,16 @@ function ToBusinessAdmin() {
     if (env.businessAdminBaseUrl) window.location.replace(`${env.businessAdminBaseUrl}${pathname}`);
   }, [pathname]);
   return env.businessAdminBaseUrl ? null : <NotFound />;
+}
+
+// Sign-up lives in the tenant app, which provisions the workspace; this site
+// keeps /register only as the shareable link to it (query string kept).
+function ToSignup() {
+  const { search } = useLocation();
+  useEffect(() => {
+    window.location.replace(`${env.businessAdminBaseUrl}/signup${search}`);
+  }, [search]);
+  return null;
 }
 
 // The docs live on their own site; /developers is the shareable entry to it,
@@ -61,7 +70,7 @@ function App() {
 
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<ToSignup />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Route>
 
